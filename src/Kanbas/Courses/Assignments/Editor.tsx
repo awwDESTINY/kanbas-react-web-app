@@ -74,18 +74,14 @@ export default function AssignmentEditor() {
           </tr><br></br>
           <tr>
             <td align="right" valign="top">
-              <label htmlFor="wd-assign-to">Assign Assign to</label>
-            </td>
-            <td align="left" valign="top">
-                <input type="text" id="wd-assign-to" value="Everyone"/>
+              <label htmlFor="wd-assign-to">Assign Assign to</label><br />
+              <input type="text" id="wd-assign-to" value="Everyone"/>
             </td>
           </tr><br></br>
           <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign-to">Due</label>
-            </td>
-            <td align="left" valign="top">
-                <input type="date" id="wd-due-date" value="2024-05-13"/>
+            <td align="center" valign="top">
+              <label htmlFor="wd-assign-to">Due</label><br />
+            <input type="date" id="wd-due-date" defaultValue="2024-05-13"/>
             </td>
           </tr><br></br>
           <tr>
@@ -98,20 +94,22 @@ export default function AssignmentEditor() {
           </tr>
           <tr>
           <td align="right" valign="top">
-                <input type="date" id="wd-available-from" value="2024-05-06"/><br/>
+                <input type="date" id="wd-available-from" defaultValue="2024-05-06"/><br/>
           </td>
           <td align="left" valign="top">
-                <input type="date" id="wd-available-until" value="2024-05-20"/><br/>
+                <input type="date" id="wd-available-until" defaultValue="2024-05-20"/><br/>
           </td>
           </tr>
-          <hr/><br></br>
+          <hr />
+          <br></br>
           <td align="center" valign="bottom">
-          <button id="wd-cancel" onClick={() => alert("Cancel")} type="button">
+          <button id="wd-cancel" type="button">
             Cancel
           </button>
-          <button id="wd-save" onClick={() => alert("Save")} type="button">
+          <button id="wd-save" type="button">
             Save
           </button>
+          
       </td>
         </table>
       </div>
