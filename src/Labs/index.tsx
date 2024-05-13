@@ -7,6 +7,7 @@ function Labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
+      <h2>Zidao Wang</h2>
       <TOC />
       <Routes>
         <Route path="/" element={<Navigate to="Lab1" />} />
