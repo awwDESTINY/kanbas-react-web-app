@@ -79,13 +79,15 @@ export default function AssignmentEditor() {
             </td>
           </tr><br></br>
           <tr>
-            <td align="center" valign="top">
-              <label htmlFor="wd-assign-to">Due</label><br />
-            <input type="date" id="wd-due-date" defaultValue="2024-05-13"/>
+            <td align="right" valign="top">
+              <label htmlFor="wd-assign-to">Due</label>
+              <td align="right" valign="bottom">
+                <input type="date" id="wd-due-date" defaultValue="2024-05-13"/>
+              </td>
             </td>
           </tr><br></br>
           <tr>
-            <td align="center" valign="top">
+            <td align="right" valign="top">
               <label htmlFor="wd-available-from">Available from</label>
             </td>
             <td align="left" valign="top">
@@ -94,24 +96,24 @@ export default function AssignmentEditor() {
           </tr>
           <tr>
           <td align="right" valign="top">
-                <input type="date" id="wd-available-from" defaultValue="2024-05-06"/><br/>
+                <input type="date" id="wd-available-from" defaultValue="2024-05-06"/>
           </td>
           <td align="left" valign="top">
-                <input type="date" id="wd-available-until" defaultValue="2024-05-20"/><br/>
+                <input type="date" id="wd-available-until" defaultValue="2024-05-20"/>
           </td>
           </tr>
-          <hr />
-          <br></br>
-          <td align="center" valign="bottom">
-          <button id="wd-cancel" type="button">
-            Cancel
-          </button>
-          <button id="wd-save" type="button">
-            Save
-          </button>
-          
-      </td>
-        </table>
-      </div>
+        <tr>
+          <td align="right" valign="top" colSpan={2}>
+            <hr />
+            <button id="wd-cancel" type="button">
+                Cancel
+            </button>
+            <button id="wd-save" type="button">
+                Save
+            </button>
+          </td>
+        </tr>
+    </table>
+</div>
   );
 }  
