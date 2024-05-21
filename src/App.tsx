@@ -6,7 +6,7 @@ import { appendFileSync } from "fs";
 function App() {
   return (
     <HashRouter>
-      <div>
+      <div className="h-100">
         <Routes>
           <Route path="/" element={<Navigate to="Labs" />} />
           <Route path="/Labs/*" element={<Labs />} />
