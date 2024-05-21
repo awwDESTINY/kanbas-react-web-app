@@ -6,7 +6,6 @@ import { MdHome } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { FaBell } from "react-icons/fa";
-{/* Find more icons */}
 export default function CourseStatus() {
   return (
     <div id="wd-course-status" style={{ width: "300px" }}>

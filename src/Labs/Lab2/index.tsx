@@ -213,7 +213,7 @@ This heading has same style as paragraph above
             Blue </div>
           <div className="wd-float-left wd-dimension-portrait wd-bg-color-red">
             Red </div>
-          <img className="wd-float-right"
+          <img className="wd-float-right" alt="logo"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"/>
           <div className="wd-float-done"></div>
        </div>
@@ -626,7 +626,7 @@ This heading has same style as paragraph above
     <h2>Cards</h2>
     <div className="card"
         style={{ width: "18rem" }}>
-      <img src="images/stacked.jpg"
+      <img src="images/stacked.jpg" alt="logo"
           className="card-img-top" />
       <div className="card-body">
         <h5 className="card-title">

@@ -6,10 +6,10 @@ import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 export default function KanbasNavigation() {
   return (
     <div id="wd-kanbas-navigation" className="list-group rounded-0">
-      <a id="wd-neu-link" target="_blank" 
+      <a id="wd-neu-link" target="_blank" rel="noreferrer"
         href="https://www.northeastern.edu/"
         className="list-group-item bg-black border-0">
-        <img src="/images/NEU.png" width="75px" /> </a>
+        <img src="/images/NEU.png"  alt="logo" width="75px" /> </a>
       <a id="wd-account-link" href="#/Kanbas/Account"
         className="list-group-item text-white
                    bg-black text-center border-0">
