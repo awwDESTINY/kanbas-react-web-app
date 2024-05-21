@@ -22,22 +22,22 @@ export default function ModulesControls() {
             </button>
           </li>
           <li>
-            <a id="wd-publish-modules-only-button" className="dropdown-item">
+            <button id="wd-publish-modules-only-button" className="dropdown-item">
               <GreenCheckmark />
               Publish modules only
-            </a>
+            </button>
           </li>
           <li>
-            <a id="wd-unpublish-all-modules-and-items-button" className="dropdown-item">
+            <button id="wd-unpublish-all-modules-and-items-button" className="dropdown-item">
               <FaBan />
               Unpublish all modules and items
-            </a>
+            </button>
           </li>
           <li>
-            <a id="wd-unpublish-modules-only-btn" className="dropdown-item">
+            <button id="wd-unpublish-modules-only-btn" className="dropdown-item">
               <FaBan />
               Unpublish modules only
-            </a>
+            </button>
           </li>
           {/* Create two more items with IDs wd-unpublish-all-modules-and-items and
               wd-unpublish-modules-only with labels Unpublish all modules and items

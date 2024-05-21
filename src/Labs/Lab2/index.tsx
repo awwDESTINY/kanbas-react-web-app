@@ -609,16 +609,16 @@ This heading has same style as paragraph above
     <h2>Tabs</h2>
     <ul className="nav nav-tabs">
       <li className="nav-item">
-          <a className="nav-link active">Active</a>
+          <button className="nav-link active">Active</button>
       </li>
       <li className="nav-item">
-          <a className="nav-link">Link</a>
+          <button className="nav-link">Link</button>
       </li>
       <li className="nav-item">
-          <a className="nav-link">Link</a>
+          <button className="nav-link">Link</button>
       </li>
       <li className="nav-item">
-          <a className="nav-link disabled">Disabled</a>
+          <button className="nav-link disabled">Disabled</button>
       </li>
     </ul>
   </div>
@@ -635,9 +635,9 @@ This heading has same style as paragraph above
         <p className="card-text">
           Stacking the most powerful rocket in history. Mars or bust!
         </p>
-        <a className="btn btn-primary">
+        <button className="btn btn-primary">
           Boldly Go
-        </a>
+        </button>
       </div>
     </div>
   </div>
