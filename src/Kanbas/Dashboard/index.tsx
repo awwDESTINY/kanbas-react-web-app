@@ -11,7 +11,7 @@ export default function Dashboard() {
             {courses.map((course) => (
             <div className="wd-dashboard-course col" style={{ width: "300px" }}>
               <div className="card rounded-3 overflow-hidden">
-            <img src="/images/reactjs.jpg" alt="React JS Course Cover Image"/>
+            <img src="/images/reactjs.jpg" alt="React JS Course Cover"/>
             <div className="card-body">
               <span className="wd-dashboard-course-link"
                 style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }} >
