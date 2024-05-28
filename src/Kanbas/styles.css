@@ -1,10 +1,6 @@
 body   {  margin: 0;  padding: 0;  }
 body * {  font-family: Arial, Helvetica, sans-serif;  }
 
-.kanbas-sidebar-space {
-    margin-right: 30px;
-}
-
 .btn-secondary {
   --bs-btn-color: #000;
   --bs-btn-bg: #c7cdd1;
