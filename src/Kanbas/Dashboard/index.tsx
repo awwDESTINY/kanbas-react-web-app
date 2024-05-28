@@ -13,13 +13,13 @@ export default function Dashboard() {
               <div className="card rounded-3 overflow-hidden">
             <img src="/images/reactjs.jpg" alt="React JS Course Cover"/>
             <div className="card-body">
-              <span className="wd-dashboard-course-link"
+              <div className="wd-dashboard-course-link"
                 style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }} >
                 {course.name}
-              </span>
-              <p className="wd-dashboard-course-title card-text" style={{ maxHeight: 53, overflow: "hidden" }}>
+              </div>
+              <div className="wd-dashboard-course-title card-text" style={{ maxHeight: 48, overflow: "hidden" }}>
                 {course.description}
-              </p>
+              </div>
               <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">Go</Link>
             </div>
             </div>
