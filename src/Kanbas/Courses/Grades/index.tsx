@@ -87,7 +87,7 @@ export default function Grades() {
               <td className="red-text">{s.firstName} {s.lastName}</td>
               {courseAssignments.map(a => {
                   const grade = s.grades.find(g => g.assignment === a._id);
-                  return <td key={`${s._id}-${a._id}`} className="assignment-header">{grade ? `${grade.grade}` : 'N/A'}</td>;
+                  return <td key={`${s._id}-${a._id}`} className="assignment-header">{grade ? `${grade.grade}%` : 'N/A'}</td>;
                 })}
             </tr>
           ))}
