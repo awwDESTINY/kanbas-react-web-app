@@ -1,45 +1,65 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { assignments } from "../../Database";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAssignment,updateAssignment } from './reducer';
 export default function AssignmentEditor() {
-  const { aid, cid } = useParams();
-  const assignment = assignments.find(assn => assn._id === aid);
-  console.log("Found assignment:", assignment);
-  console.log("Assignment ID:", aid);
-  console.log("Course ID:", cid);
-  if (!assignment) {
-    return <div>Assignment not found.</div>;
-  }
+  const { cid, aid } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const assignments = useSelector((state: any) => state.assignments.assignments);
+  const currentAssignment = assignments.find((a: any) => a._id === aid);
+
+  const [assignmentDetails, setAssignmentDetails] = useState({
+    title: '',
+    description: '',
+    points: '',
+    dueDate: '',
+    availableFromDate: '',
+    availableUntilDate: ''
+  });
+  useEffect(() => {
+    if (currentAssignment) {
+      setAssignmentDetails(currentAssignment);
+    }
+  }, [currentAssignment]);
+
+  const handleChange = ((e: any) => {
+    const { name, value } = e.target;
+    setAssignmentDetails(prev => ({ ...prev, [name]: value }));
+  });
+
+  const handleSave = () => {
+    if (aid) {
+      dispatch(updateAssignment({ ...assignmentDetails, course: cid, _id: aid }));
+    } else {
+      dispatch(addAssignment({ ...assignmentDetails, course: cid }));
+    }
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
+  };
+
+  const handleCancel = () => {
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
+  };
     return (
       <div id="wd-assignments-editor">
       <div className="mb-3">
-        <label htmlFor="input1" className="form-label">Assignment Name</label>
-        <input type="text" className="form-control" id="input1" placeholder={assignment._id} value={assignment.title}/>
+        <label htmlFor="title" className="form-label">Assignment Name</label>
+        <input type="text" className="form-control" id="title" name="title"
+               placeholder="New Assignment" value={assignmentDetails.title}
+               onChange={handleChange}/>
       </div>
       <div className="mb-3">
-  <div className="form-control" id="wd-description" style={{ minHeight: '150px', overflowY: 'auto', whiteSpace: 'pre-wrap' }}>
-    <p>The assignment is <span style={{ color: 'red' }}>available online</span></p>
-    <p></p>
-    <p></p>
-    <p>Submit a link to the landing page of your Web Application running on <span style={{ textDecoration: 'underline dashed red' }}>Netlify</span>.</p>
-    <p></p>
-    <p>The landing page should include the following:</p>
-    <ul>
-      <li>Your full name and section</li>
-      <li>Links to each of the lab assignments</li>
-      <li>Link to the <span style={{ textDecoration: 'underline dashed red' }}>Kanbas</span> application</li>
-      <li>Links to all relevant source code respositories</li>
-    </ul>
-    <p></p>
-    <p><span style={{ backgroundColor: 'lightgrey' }}>The</span> <span style={{ textDecoration: 'underline dashed red' }}>Kanbas</span> application should include a link to navigate back to the landing page.</p>
-  </div>
-</div>
+        <textarea className="form-control" id="description" name="description"
+                  placeholder="New Assignment Description"
+                  value={assignmentDetails.description} onChange={handleChange}/>
+      </div>
 <div className="mb-3 row">
-  <label htmlFor="points" className="col-sm-4 col-form-label text-end">Points</label>
-  <div className="col-sm-8">
-    <input type="text" className="form-control" id="point" value="100" />
-  </div>
-</div>
+        <label htmlFor="points" className="col-sm-4 col-form-label text-end">Points</label>
+        <div className="col-sm-8">
+        <input type="text" className="form-control" id="points" name="points"
+               value={assignmentDetails.points} onChange={handleChange}/>
+        </div>
+      </div>
       <div className="mb-3 row">
       <label htmlFor="assign-group"
         className="col-sm-4 col-form-label text-end">
@@ -115,29 +135,33 @@ export default function AssignmentEditor() {
     <h5>Assign to</h5>
     <input type="text" className="form-control" id="assign-to" value="Everyone" /><br></br>
     <h5>Due</h5>  
-    <input type="datetime-local" className="form-control" id="wd-due-date" defaultValue="2024-05-13T23:59" /><br></br>
+    <input type="datetime-local" className="form-control" id="dueDate" name="dueDate"
+               value={assignmentDetails.dueDate} onChange={handleChange}/><br/>
     <div className="row">
       <div className="col-sm-6">
         <h5>Available from</h5>
-        <input type="datetime-local" className="form-control" id="wd-available-from" defaultValue="2024-05-06T12:00" />
+        <input type="datetime-local" className="form-control" id="availableFromDate" name="availableFromDate"
+               value={assignmentDetails.availableFromDate} onChange={handleChange}/>
       </div>
       <div className="col-sm-6">
         <h5>Until</h5>
-        <input type="date" className="form-control" id="wd-available-until"/>
+        <input type="date" className="form-control" id="availableUntilDate" name="availableUntilDate"
+               value={assignmentDetails.availableUntilDate} onChange={handleChange}/>
       </div>
     </div>
   </div>
 </div>
   <hr />
   <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-  <button id="wd-save-btn" className="btn btn-danger me-1 float-end">
+  <button id="wd-save-btn" className="btn btn-danger me-1 float-end" onClick={handleSave}>
         Save
       </button>
       </Link>
       <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-      <button id="wd-cancel-btn" className="btn btn-secondary me-1 float-end">
+      <button id="wd-cancel-btn" className="btn btn-secondary me-1 float-end" onClick={handleCancel}>
         Cancel
-      </button></Link>
+      </button>
+      </Link>
 </div>
   );
 }  

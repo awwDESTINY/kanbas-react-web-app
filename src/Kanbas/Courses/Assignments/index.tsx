@@ -1,22 +1,51 @@
+import React, { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa";
 import SingleAssignmentControlButtons from "./SingleAssignmentControlButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import { MdArrowDropDown } from "react-icons/md";
 import { TfiWrite } from "react-icons/tfi";
 import { IoSearchOutline } from "react-icons/io5";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { addAssignment,deleteAssignment } from './reducer';
 import "./index.css"
-import { Link, useParams } from "react-router-dom";
-import { assignments } from "../../Database";
 export default function Assignments() {
   const { cid } = useParams();
-  const courseAssignments = assignments.filter(assignment => assignment.course === cid);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
+  interface Assignment {
+    _id: string;
+    title: string;
+    course: string;
+    description?: string;
+    dueDate?: string;
+    availableFromDate?: string;
+    availableUntilDate?: string;
+  }
+  
+  const courseAssignments = useSelector((state: any) => state.assignments.assignments.filter((assignment: Assignment) => assignment.course === cid));
+  const handleAddAssignment = () => {
+    navigate(`/Kanbas/Courses/${cid}/Assignments/new`);
+  };
+  const confirmDelete = (id:any) => {
+    setShowModal(true);
+    setDeleteId(id);
+  };
+  const handleDelete = () => {
+    dispatch(deleteAssignment(deleteId));
+    setShowModal(false);
+    setDeleteId(null);
+  };
   return (
       <div id="wd-assignments">
-        <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Assignment
-      </button>
+        <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end" onClick={handleAddAssignment}>
+        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> Assignment
+        </button>
       <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
@@ -37,7 +66,7 @@ export default function Assignments() {
         <AssignmentControlButtons />
       </div>
       <ul className="wd-lessons list-group rounded-0 wd-padded-left wd-bg-color-green">
-  {courseAssignments.map((assignment) => (
+  {courseAssignments.map((assignment: any) => (
     <li key={assignment._id} className="wd-lesson list-group-item d-flex align-items-center p-3">
       <div className="icon-container me-2">
         <BsGripVertical className="fs-3" />
@@ -46,7 +75,7 @@ export default function Assignments() {
       <div className="assignment-details flex-grow-1">
         <strong>
           <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-_id">
-            {assignment._id}
+            {assignment.title}
           </Link>
         </strong>
         <h6>
@@ -54,16 +83,30 @@ export default function Assignments() {
             <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-link">
               Multiple Modules
             </Link>
-            <span className="wd-fg-color-black"> | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</span>
+            <span className="wd-fg-color-black"> | <b>Due</b> {assignment.dueDate || 'May 13 at 11:59pm'} | {assignment.points || 100} pts</span>
           </p>
         </h6>
       </div>
       <div className="control-buttons">
+        <FaTrash onClick={() => confirmDelete(assignment._id)} className="text-danger me-4 mb-2" />
         <SingleAssignmentControlButtons />
       </div>
     </li>
   ))}
 </ul>
+{showModal && (
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-content">
+            <div className="modal-body">
+              <p>Delete this assignment?</p>
+            </div>
+            <div className="modal-footer">
+              <button onClick={() => setShowModal(false)} className="btn btn-secondary">No</button>
+              <button onClick={handleDelete} className="btn btn-danger">Yes</button>
+            </div>
+          </div>
+        </div>
+      )}
     </li>
   </ul>
 </div>
