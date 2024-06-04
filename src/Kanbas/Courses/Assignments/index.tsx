@@ -9,7 +9,7 @@ import { TfiWrite } from "react-icons/tfi";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { addAssignment,deleteAssignment } from './reducer';
+import { deleteAssignment } from './reducer';
 import "./index.css"
 export default function Assignments() {
   const { cid } = useParams();
