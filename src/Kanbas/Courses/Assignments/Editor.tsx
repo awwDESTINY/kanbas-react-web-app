@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Assignment } from './types';
-import { fetchAssignmentsForCourse, createAssignment, updateAssignment, deleteAssignment } from "./client";
-import { setAssignments, addAssignment, deleteAssignment as reduxDeleteAssignment, updateAssignment as reduxUpdateAssignment } from './reducer';
+import { createAssignment, updateAssignment } from "./client";
+import {  addAssignment, updateAssignment as reduxUpdateAssignment } from './reducer';
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid?: string }>();
   const dispatch = useDispatch();

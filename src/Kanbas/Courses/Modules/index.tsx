@@ -13,7 +13,6 @@ const Modules = () => {
   const modules = useSelector((state: any) => state.modules.modules);
   const dispatch = useDispatch();
   const saveModule = async (module: any) => {
-    const status = await client.updateModule(module);
     dispatch(updateModule(module));
   };
   const createModule = async (module: any) => {

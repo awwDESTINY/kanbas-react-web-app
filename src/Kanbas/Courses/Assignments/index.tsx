@@ -9,9 +9,8 @@ import { TfiWrite } from "react-icons/tfi";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { Assignment } from './types';
-import { fetchAssignmentsForCourse, createAssignment, updateAssignment, deleteAssignment } from "./client";
-import { setAssignments, addAssignment, deleteAssignment as reduxDeleteAssignment, updateAssignment as reduxUpdateAssignment } from './reducer'
+import { fetchAssignmentsForCourse, deleteAssignment } from "./client";
+import { setAssignments, deleteAssignment as reduxDeleteAssignment } from './reducer'
 import "./index.css"
 export default function Assignments() {
   const { cid } = useParams();
@@ -19,8 +18,6 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentAssignment, setCurrentAssignment] = useState({ _id: '', title: '', dueDate: '', points: 100 });
   const assignments = useSelector((state:any) => state.assignments.assignments.filter((a:any) => a.course === cid));
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/new`);
@@ -34,11 +31,6 @@ export default function Assignments() {
     };
     loadAssignments();
   }, [cid, dispatch]);
-  const openModalToAdd = () => {
-    setIsEditing(false);
-    setCurrentAssignment({ _id: '', title: '', dueDate: '', points: 100 });
-    setShowModal(true);
-  };
   const confirmDelete = async (assignmentId: string) => {
     setShowModal(true);
     setDeleteId(assignmentId);
