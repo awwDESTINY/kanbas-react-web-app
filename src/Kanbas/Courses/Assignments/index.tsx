@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import SingleAssignmentControlButtons from "./SingleAssignmentControlButtons";
@@ -9,38 +9,47 @@ import { TfiWrite } from "react-icons/tfi";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteAssignment } from './reducer';
+import { Assignment } from './types';
+import { fetchAssignmentsForCourse, createAssignment, updateAssignment, deleteAssignment } from "./client";
+import { setAssignments, addAssignment, deleteAssignment as reduxDeleteAssignment, updateAssignment as reduxUpdateAssignment } from './reducer'
 import "./index.css"
 export default function Assignments() {
   const { cid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-
-  interface Assignment {
-    _id: string;
-    title: string;
-    course: string;
-    description?: string;
-    dueDate?: string;
-    availableFromDate?: string;
-    availableUntilDate?: string;
-  }
-  
-  const courseAssignments = useSelector((state: any) => state.assignments.assignments.filter((assignment: Assignment) => assignment.course === cid));
+  const [deleteId, setDeleteId] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentAssignment, setCurrentAssignment] = useState({ _id: '', title: '', dueDate: '', points: 100 });
+  const assignments = useSelector((state:any) => state.assignments.assignments.filter((a:any) => a.course === cid));
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/new`);
   };
-  const confirmDelete = (id:any) => {
+  useEffect(() => {
+    const loadAssignments = async () => {
+      if (cid) {
+        const assignmentsData = await fetchAssignmentsForCourse(cid);
+        dispatch(setAssignments(assignmentsData));
+      }
+    };
+    loadAssignments();
+  }, [cid, dispatch]);
+  const openModalToAdd = () => {
+    setIsEditing(false);
+    setCurrentAssignment({ _id: '', title: '', dueDate: '', points: 100 });
     setShowModal(true);
-    setDeleteId(id);
   };
-  const handleDelete = () => {
-    dispatch(deleteAssignment(deleteId));
+  const confirmDelete = async (assignmentId: string) => {
+    setShowModal(true);
+    setDeleteId(assignmentId);
+  };
+  const handleDelete = async () => {
+    await deleteAssignment(deleteId);
+    dispatch(reduxDeleteAssignment(deleteId));
     setShowModal(false);
-    setDeleteId(null);
+    setDeleteId('');
   };
+  
   return (
       <div id="wd-assignments">
         <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end" onClick={handleAddAssignment}>
@@ -66,7 +75,7 @@ export default function Assignments() {
         <AssignmentControlButtons />
       </div>
       <ul className="wd-lessons list-group rounded-0 wd-padded-left wd-bg-color-green">
-  {courseAssignments.map((assignment: any) => (
+  {assignments.map((assignment: any) => (
     <li key={assignment._id} className="wd-lesson list-group-item d-flex align-items-center p-3">
       <div className="icon-container me-2">
         <BsGripVertical className="fs-3" />

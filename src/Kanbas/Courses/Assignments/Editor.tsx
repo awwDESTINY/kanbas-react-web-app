@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAssignment,updateAssignment } from './reducer';
+import { Assignment } from './types';
+import { fetchAssignmentsForCourse, createAssignment, updateAssignment, deleteAssignment } from "./client";
+import { setAssignments, addAssignment, deleteAssignment as reduxDeleteAssignment, updateAssignment as reduxUpdateAssignment } from './reducer';
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
+  const { cid, aid } = useParams<{ cid: string; aid?: string }>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const assignments = useSelector((state: any) => state.assignments.assignments);
-  const currentAssignment = assignments.find((a: any) => a._id === aid);
+  const currentAssignment = assignments.find((a: any) => a._id === aid) || null;
 
-  const [assignmentDetails, setAssignmentDetails] = useState({
-    title: '',
-    description: '',
-    points: '',
-    dueDate: '',
-    availableFromDate: '',
-    availableUntilDate: ''
+  const [assignmentDetails, setAssignmentDetails] = useState<Assignment>({
+    _id: currentAssignment ? currentAssignment._id : '',
+    title: currentAssignment ? currentAssignment.title : '',
+    description: currentAssignment ? currentAssignment.description : '',
+    points: currentAssignment ? currentAssignment.points : 100,
+    dueDate: currentAssignment ? currentAssignment.dueDate : '',
+    availableFromDate: currentAssignment ? currentAssignment.availableFromDate : '',
+    availableUntilDate: currentAssignment ? currentAssignment.availableUntilDate : '',
+    course: cid ?? ''
   });
   useEffect(() => {
     if (currentAssignment) {
@@ -28,11 +32,17 @@ export default function AssignmentEditor() {
     setAssignmentDetails(prev => ({ ...prev, [name]: value }));
   });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (aid) {
-      dispatch(updateAssignment({ ...assignmentDetails, course: cid, _id: aid }));
+      if (!cid) {
+        console.error("Course ID is missing!");
+        return;
+      }
+      await updateAssignment({ ...assignmentDetails, course: cid });
+      dispatch(reduxUpdateAssignment({ ...assignmentDetails, course: cid }));
     } else {
-      dispatch(addAssignment({ ...assignmentDetails, course: cid }));
+      const newAssignment = await createAssignment(cid || 'defaultCourse', assignmentDetails);
+      dispatch(addAssignment(newAssignment));
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
