@@ -9,7 +9,7 @@ import { setModules, addModule, editModule, updateModule, deleteModule }
 import * as client from "./client";
 import { useSelector, useDispatch } from "react-redux";
 const Modules = () => {
-  const { cid } = useParams();
+  const { cid } = useParams<string>();
   const modules = useSelector((state: any) => state.modules.modules);
   const dispatch = useDispatch();
   const saveModule = async (module: any) => {
@@ -23,13 +23,15 @@ const Modules = () => {
     await client.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
   };
-  const fetchModules = async () => {
-    const modules = await client.findModulesForCourse(cid as string);
+  const fetchModules = async (courseId: string) => {
+    const modules = await client.findModulesForCourse(courseId);
     dispatch(setModules(modules));
   };
   useEffect(() => {
-    fetchModules();
-  }, []);
+    if (cid) {
+    fetchModules(cid);
+    }
+  }, [cid, dispatch]);
 
   const [moduleName, setModuleName] = useState('');
     return (
