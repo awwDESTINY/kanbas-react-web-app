@@ -27,12 +27,12 @@ const Modules = () => {
     const modules = await client.findModulesForCourse(courseId);
     dispatch(setModules(modules));
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (cid) {
-    fetchModules(cid);
+      fetchModules(cid);
     }
-  }, [cid, dispatch]);
+  }, [cid, fetchModules]);
 
   const [moduleName, setModuleName] = useState('');
     return (
@@ -65,9 +65,7 @@ const Modules = () => {
                 />
               )}
               <ModuleControlButtons moduleId={module._id} 
-                deleteModule={(moduleId) => {
-                  { removeModule(moduleId); }
-                }}
+                deleteModule={(moduleId) => removeModule(moduleId)}
                 editModule={(moduleId) => dispatch(editModule(moduleId))}
               />
             </div>
