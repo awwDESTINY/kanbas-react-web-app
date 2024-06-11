@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
@@ -23,10 +23,11 @@ const Modules = () => {
     await client.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
   };
-  const fetchModules = async (courseId: string) => {
+  const fetchModules = useCallback(async (courseId: string) => {
     const modules = await client.findModulesForCourse(courseId);
     dispatch(setModules(modules));
-  };
+  }, [dispatch]);
+  
   useEffect(() => {
     if (cid) {
     fetchModules(cid);
