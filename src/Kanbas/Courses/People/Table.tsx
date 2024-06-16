@@ -51,8 +51,10 @@ export default function PeopleTable() {
         People
       </button>
         <PeopleDetails fetchUsers={fetchUsers} />
-      <input onChange={(e) => filterUsersByName(e.target.value)} placeholder="Search people"
-             className="form-control float-start w-25 me-2" />
+      <div>
+        <input onChange={(e) => {setName(e.target.value); filterUsersByName(e.target.value);}} placeholder="Search people" className="form-control float-start w-25 me-2" />
+        </div>
+
       <select value={role} onChange={(e) =>filterUsersByRole(e.target.value)} className="form-select float-start w-25" >
         <option value="">All Roles</option>        <option value="STUDENT">Students</option>
         <option value="TA">Assistants</option>     <option value="FACULTY">Faculty</option>
