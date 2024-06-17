@@ -32,13 +32,9 @@ export default function PeopleDetails({ fetchUsers }:
     navigate(`/Kanbas/Courses/${cid}/People`);
   };
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!uid) return;
-      const user = await client.findUserById(uid);
-      setUser(user);
-    };
     if (uid) fetchUser();
   }, [uid]);
+  if (!uid) return null;
   return (
     <div className="position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">
       <Link to={`/Kanbas/Courses/${cid}/People`} className="btn position-fixed end-0 top-0">
@@ -66,7 +62,7 @@ export default function PeopleDetails({ fetchUsers }:
       <b>Roles:</b> {user.role} <br />           <b>Login ID:</b> {user.loginId} <br />
       <b>Section:</b> {user.section} <br />      <b>Total Activity:</b> {user.totalActivity} 
       <hr />
-      <button onClick={() => deleteUser(uid!)} className="btn btn-danger float-end" > Delete </button>
+      <button onClick={() => deleteUser(uid)} className="btn btn-danger float-end" > Delete </button>
       <button onClick={() => navigate(`/Kanbas/Courses/${cid}/People`)}
               className="btn btn-secondary float-start float-end me-2" > Cancel </button>
       </div> ); }

@@ -20,8 +20,9 @@ export default function Profile() {
     dispatch(setCurrentUser(null));
     navigate("/Kanbas/Account/Signin");
   };
-
-  useEffect(() => { fetchProfile(); }, []);
+  useEffect(() => { 
+    fetchProfile(); 
+  }, [fetchProfile]);
   return (
     <div>
       <h1>Profile</h1>
