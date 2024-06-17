@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -15,11 +15,11 @@ export default function PeopleDetails({ fetchUsers }:
   };
   const { uid, cid } = useParams();
   const [user, setUser] = useState<any>({});
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     if (!uid) return;
     const user = await client.findUserById(uid);
     setUser(user);
-  };
+  }, [uid]);
   const [name, setName] = useState("");
   const [editing, setEditing] = useState(false);
   const saveUser = async () => {
@@ -32,9 +32,8 @@ export default function PeopleDetails({ fetchUsers }:
     navigate(`/Kanbas/Courses/${cid}/People`);
   };
   useEffect(() => {
-    if (uid) fetchUser();
-  }, [uid]);
-  if (!uid) return null;
+    fetchUser();
+  }, [fetchUser]);
   return (
     <div className="position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">
       <Link to={`/Kanbas/Courses/${cid}/People`} className="btn position-fixed end-0 top-0">
@@ -62,7 +61,7 @@ export default function PeopleDetails({ fetchUsers }:
       <b>Roles:</b> {user.role} <br />           <b>Login ID:</b> {user.loginId} <br />
       <b>Section:</b> {user.section} <br />      <b>Total Activity:</b> {user.totalActivity} 
       <hr />
-      <button onClick={() => deleteUser(uid)} className="btn btn-danger float-end" > Delete </button>
+      <button onClick={() => deleteUser(uid!)} className="btn btn-danger float-end" > Delete </button>
       <button onClick={() => navigate(`/Kanbas/Courses/${cid}/People`)}
               className="btn btn-secondary float-start float-end me-2" > Cancel </button>
       </div> ); }
