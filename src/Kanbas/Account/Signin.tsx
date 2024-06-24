@@ -27,7 +27,7 @@ export default function Signin() {
         value={credentials.password} className="form-control mb-2" placeholder="password" type="password" />
       <button onClick={signin} className="btn btn-primary w-100"> Sign in </button>
       <br />
-      <Link to="/Kanbas/Account/Sign up">Sign up</Link>
+      <Link to="/Kanbas/Account/Signup">Sign up</Link>
     </div>
   );
 }

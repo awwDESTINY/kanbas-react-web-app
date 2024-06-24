@@ -40,7 +40,6 @@ export default function Signup() {
       <select value={user.role || ""} onChange={(e) => setUser({ ...user, role: e.target.value })}
               className="form-control mb-2">
                 <option value="STUDENT">STUDENT</option>
-                <option value="TA">ASSITANT</option>
                 <option value="FACULTY">FACULTY</option>
       </select>
       <button onClick={signup} className="btn btn-primary mb-2"> Sign up </button><br />

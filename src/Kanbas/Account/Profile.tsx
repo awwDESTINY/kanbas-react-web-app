@@ -35,8 +35,7 @@ export default function Profile() {
           <input className="mt-2" value={profile.dob} onChange={(e) => setProfile({ ...profile, dob: e.target.value })} type="date"/><br/>
           <input className="mt-2" value={profile.email} onChange={(e) => setProfile({ ...profile, email: e.target.value })}/><br/>
           <select className="mt-2" onChange={(e) => setProfile({ ...profile, role: e.target.value })}>
-            <option value="USER">User</option>            <option value="ADMIN">Admin</option>
-            <option value="FACULTY">Faculty</option>      <option value="STUDENT">Student</option>
+            <option value="FACULTY">FACULTY</option>      <option value="STUDENT">STUDENT</option>
           </select>
           <button onClick={signout} className="btn btn-danger w-100 mt-2">
             Sign out
